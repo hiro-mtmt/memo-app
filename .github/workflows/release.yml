@@ -50,7 +50,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_name }}
-          releaseName: 'Memo App ${{ github.ref_name }}'
+          releaseName: 'ラクメモ ${{ github.ref_name }}'
           releaseBody: 'ダウンロードは下の Assets からどうぞ。'
           releaseDraft: true
           prerelease: false
