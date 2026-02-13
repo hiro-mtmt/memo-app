@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memo App - シンプルなMarkdownメモアプリ</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans JP", sans-serif;
+      color: #333;
+      line-height: 1.7;
+      background: #f8f9fa;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #4a90a4 0%, #357a8e 100%);
+      color: #fff;
+      text-align: center;
+      padding: 80px 20px 60px;
+    }
+
+    .hero img {
+      width: 120px;
+      height: 120px;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 0 auto 32px;
+    }
+
+    .download-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .download-buttons a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: #357a8e;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .download-buttons a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    .download-buttons svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Features */
+    .features {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 1.6rem;
+      margin-bottom: 40px;
+      color: #357a8e;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .feature-card .icon {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* Install Guide */
+    .install {
+      background: #fff;
+      padding: 48px 20px;
+    }
+
+    .install-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .install h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+      color: #357a8e;
+    }
+
+    .install-note {
+      background: #fffbeb;
+      border: 1px solid #f0d060;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .install-note strong {
+      color: #b8860b;
+    }
+
+    .install-steps {
+      font-size: 0.92rem;
+      color: #555;
+    }
+
+    .install-steps h3 {
+      font-size: 1rem;
+      color: #333;
+      margin: 16px 0 8px;
+    }
+
+    .install-steps ol {
+      padding-left: 1.4em;
+    }
+
+    .install-steps li {
+      margin-bottom: 4px;
+    }
+
+    .install-steps code {
+      background: #f0f0f0;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    /* Support */
+    .support {
+      text-align: center;
+      padding: 48px 20px;
+    }
+
+    .support h2 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: #357a8e;
+    }
+
+    .support p {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .support-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffdd00;
+      color: #333;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .support-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 0.82rem;
+      color: #999;
+    }
+
+    footer a {
+      color: #357a8e;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img src="icon.png" alt="Memo App icon">
+    <h1>Memo App</h1>
+    <p>Markdownが使える、シンプルで軽量なデスクトップメモアプリ。</p>
+    <div class="download-buttons">
+      <a href="https://github.com/hiro-mtmt/memo-app/releases/latest">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+        macOS (Apple Silicon)
+      </a>
+      <a href="https://github.com/hiro-mtmt/memo-app/releases/latest">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+        macOS (Intel)
+      </a>
+      <a href="https://github.com/hiro-mtmt/memo-app/releases/latest">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5z"/></svg>
+        Windows
+      </a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <h2>Features</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">M&#8595;</div>
+        <h3>Markdown対応</h3>
+        <p>GFM対応のMarkdownエディタ。リアルタイムプレビューで快適に書ける。</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128193;</div>
+        <h3>フォルダ管理</h3>
+        <p>メモをフォルダで整理。ドラッグ&ドロップで簡単に移動できる。</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128190;</div>
+        <h3>自動保存</h3>
+        <p>編集内容は自動で保存。データはすべてローカルに安全に保管。</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128269;</div>
+        <h3>ピン留め&検索</h3>
+        <p>よく使うメモをピン留め。検索で必要なメモにすぐアクセス。</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#127912;</div>
+        <h3>テーマ切替</h3>
+        <p>ライト/ダークテーマに対応。好みに合わせて切り替え可能。</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#9889;</div>
+        <h3>軽量&高速</h3>
+        <p>Tauri + Rustで構築。メモリ使用量が少なく、起動が速い。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Install Guide -->
+  <section class="install">
+    <div class="install-inner">
+      <h2>インストール方法</h2>
+      <div class="install-note">
+        <strong>&#9888; 注意:</strong> このアプリはコード署名されていません。初回起動時に警告が表示されますが、以下の手順で開けます。
+      </div>
+      <div class="install-steps">
+        <h3>macOS</h3>
+        <ol>
+          <li><code>.dmg</code> ファイルをダウンロード</li>
+          <li>開いてアプリを Applications フォルダへドラッグ</li>
+          <li>初回は右クリック → 「開く」を選択</li>
+          <li>確認ダイアログで「開く」をクリック</li>
+        </ol>
+        <h3>Windows</h3>
+        <ol>
+          <li><code>.msi</code> または <code>.exe</code> をダウンロード</li>
+          <li>実行し、SmartScreen の警告が出たら「詳細情報」→「実行」</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support -->
+  <section class="support">
+    <h2>気に入ったら応援してください</h2>
+    <p>Memo App は無料でお使いいただけます。<br>開発の励みになりますので、よろしければサポートお願いします。</p>
+    <a class="support-button" href="https://buymeacoffee.com/mattsuu" target="_blank" rel="noopener">
+      &#9749; Buy me a coffee
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Memo App &mdash; <a href="https://github.com/hiro-mtmt/memo-app" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+</body>
+</html>
