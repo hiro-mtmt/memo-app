@@ -255,15 +255,15 @@
     <h1>ラクメモ</h1>
     <p>Markdownが使える、シンプルで軽量なデスクトップメモアプリ。</p>
     <div class="download-buttons">
-      <a href="https://github.com/hiro-mtmt/memo-app/releases/latest">
+      <a id="dl-mac-arm" href="https://github.com/hiro-mtmt/memo-app/releases/latest">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
         macOS (Apple Silicon)
       </a>
-      <a href="https://github.com/hiro-mtmt/memo-app/releases/latest">
+      <a id="dl-mac-intel" href="https://github.com/hiro-mtmt/memo-app/releases/latest">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
         macOS (Intel)
       </a>
-      <a href="https://github.com/hiro-mtmt/memo-app/releases/latest">
+      <a id="dl-windows" href="https://github.com/hiro-mtmt/memo-app/releases/latest">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5z"/></svg>
         Windows
       </a>
@@ -350,6 +350,9 @@
     fetch('https://api.github.com/repos/hiro-mtmt/memo-app/releases')
       .then(r => r.json())
       .then(releases => {
+        if (!Array.isArray(releases) || releases.length === 0) return;
+
+        // 累計ダウンロード数
         let total = 0;
         releases.forEach(r => {
           r.assets.forEach(a => { total += a.download_count; });
@@ -357,6 +360,20 @@
         if (total > 0) {
           document.getElementById('download-count').textContent = '累計ダウンロード数：' + total;
         }
+
+        // 最新リリースのアセットから各プラットフォーム用URLを設定
+        const latest = releases.find(r => !r.draft && !r.prerelease) || releases[0];
+        if (!latest || !latest.assets) return;
+        latest.assets.forEach(a => {
+          const name = a.name.toLowerCase();
+          if (name.endsWith('.dmg') && name.includes('aarch64')) {
+            document.getElementById('dl-mac-arm').href = a.browser_download_url;
+          } else if (name.endsWith('.dmg') && name.includes('x64')) {
+            document.getElementById('dl-mac-intel').href = a.browser_download_url;
+          } else if (name.endsWith('.msi')) {
+            document.getElementById('dl-windows').href = a.browser_download_url;
+          }
+        });
       })
       .catch(() => {});
   </script>
