@@ -90,6 +90,12 @@
       height: 20px;
     }
 
+    .download-count {
+      margin-top: 16px;
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
     /* Features */
     .features {
       max-width: 800px;
@@ -262,6 +268,7 @@
         Windows
       </a>
     </div>
+    <p class="download-count" id="download-count"></p>
   </section>
 
   <!-- Features -->
@@ -339,5 +346,19 @@
     <p>&copy; 2025 ラクメモ &mdash; <a href="https://github.com/hiro-mtmt/memo-app" target="_blank" rel="noopener">GitHub</a></p>
   </footer>
 
+  <script>
+    fetch('https://api.github.com/repos/hiro-mtmt/memo-app/releases')
+      .then(r => r.json())
+      .then(releases => {
+        let total = 0;
+        releases.forEach(r => {
+          r.assets.forEach(a => { total += a.download_count; });
+        });
+        if (total > 0) {
+          document.getElementById('download-count').textContent = '累計ダウンロード数：' + total;
+        }
+      })
+      .catch(() => {});
+  </script>
 </body>
 </html>
