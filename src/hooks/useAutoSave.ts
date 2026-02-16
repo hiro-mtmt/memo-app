@@ -15,6 +15,10 @@ export function useAutoSave(
   const { delay = 1000 } = options;
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const previousContentRef = useRef<string>('');
+  const onSavedRef = useRef(onSaved);
+  const currentMemoRef = useRef(currentMemo);
+  onSavedRef.current = onSaved;
+  currentMemoRef.current = currentMemo;
 
   useEffect(() => {
     // メモが選択されていない場合は何もしない
@@ -38,14 +42,15 @@ export function useAutoSave(
     }
 
     // デバウンス処理で自動保存
+    const memo = currentMemo;
     timeoutRef.current = setTimeout(async () => {
       try {
-        const title = currentMemo.title || '無題';
-        const newFilename = await saveMemo(title, editingContent, currentMemo.filename);
+        const title = memo.title || '無題';
+        const newFilename = await saveMemo(title, editingContent, memo.filename);
 
         // ファイル名が変更された場合は親に通知
-        if (newFilename !== currentMemo.filename && onSaved) {
-          onSaved(newFilename);
+        if (newFilename !== memo.filename && onSavedRef.current) {
+          onSavedRef.current(newFilename);
         }
 
         previousContentRef.current = editingContent;
@@ -61,7 +66,7 @@ export function useAutoSave(
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [currentMemo, editingContent, delay, onSaved]);
+  }, [currentMemo?.filename, editingContent, delay]);
 
   // メモが切り替わったら previousContentRef をリセット
   useEffect(() => {

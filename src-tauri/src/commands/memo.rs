@@ -323,12 +323,21 @@ pub fn delete_memo(filename: String) -> Result<(), String> {
 #[tauri::command]
 pub fn create_memo(extension: Option<String>) -> Result<MemoMetadata, String> {
     let ext = extension.unwrap_or_else(|| "md".to_string());
-    let timestamp = chrono::Local::now().timestamp();
-    let title = format!("新しいメモ_{}", timestamp);
+    let now_local = chrono::Local::now();
+    let title = now_local.format("メモ_%Y-%m-%d_%H%M").to_string();
     let content = String::new();
     let sanitized = sanitize_filename(&title);
-    let filename_with_ext = format!("{}.{}", sanitized, ext);
     let memo_dir = get_memo_directory()?;
+    // 同名ファイルが存在する場合はサフィックスを付ける
+    let mut filename_with_ext = format!("{}.{}", sanitized, ext);
+    let mut final_title = title;
+    let mut counter = 2;
+    while memo_dir.join(&filename_with_ext).exists() {
+        final_title = format!("{}_{}", now_local.format("メモ_%Y-%m-%d_%H%M"), counter);
+        let sanitized_new = sanitize_filename(&final_title);
+        filename_with_ext = format!("{}.{}", sanitized_new, ext);
+        counter += 1;
+    }
     fs::write(memo_dir.join(&filename_with_ext), &content)
         .map_err(|e| format!("Failed to create memo: {}", e))?;
 
@@ -336,7 +345,7 @@ pub fn create_memo(extension: Option<String>) -> Result<MemoMetadata, String> {
 
     Ok(MemoMetadata {
         filename: filename_with_ext,
-        title,
+        title: final_title,
         content,
         created_at: now.clone(),
         updated_at: now,
