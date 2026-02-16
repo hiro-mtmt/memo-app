@@ -9,6 +9,9 @@ use commands::memo::{create_memo, delete_memo, list_memos, read_memo, save_memo,
 use tauri::{CustomMenuItem, Menu, MenuItem, Submenu};
 
 fn main() {
+    let file_menu = Submenu::new("File", Menu::new()
+        .add_item(CustomMenuItem::new("save", "Save").accelerator("CmdOrCtrl+S")));
+
     let edit_menu = Submenu::new("Edit", Menu::new()
         .add_native_item(MenuItem::Undo)
         .add_native_item(MenuItem::Redo)
@@ -24,6 +27,7 @@ fn main() {
         .add_item(CustomMenuItem::new("zoom_reset", "Actual Size").accelerator("CmdOrCtrl+0")));
 
     let menu = Menu::new()
+        .add_submenu(file_menu)
         .add_submenu(edit_menu)
         .add_submenu(view_menu);
 
@@ -32,6 +36,7 @@ fn main() {
         .on_menu_event(|event| {
             let window = event.window();
             match event.menu_item_id() {
+                "save" => { let _ = window.emit("menu-save", ""); }
                 "zoom_in" => { let _ = window.emit("zoom", "in"); }
                 "zoom_out" => { let _ = window.emit("zoom", "out"); }
                 "zoom_reset" => { let _ = window.emit("zoom", "reset"); }

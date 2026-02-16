@@ -43,6 +43,15 @@ function App() {
     return () => { unlisten?.(); };
   }, []);
 
+  // Cmd+S / Ctrl+S メニューイベント
+  useEffect(() => {
+    let unlisten: (() => void) | undefined;
+    listen('menu-save', () => {
+      handleSave();
+    }).then((fn) => { unlisten = fn; });
+    return () => { unlisten?.(); };
+  });
+
   // 自動保存機能
   useAutoSave(currentMemo, editingContent, async (newFilename) => {
     // ファイル名が変更された場合はメモリストを再読み込み
