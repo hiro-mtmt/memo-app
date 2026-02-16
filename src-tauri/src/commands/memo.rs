@@ -324,7 +324,7 @@ pub fn delete_memo(filename: String) -> Result<(), String> {
 pub fn create_memo(extension: Option<String>) -> Result<MemoMetadata, String> {
     let ext = extension.unwrap_or_else(|| "md".to_string());
     let now_local = chrono::Local::now();
-    let title = now_local.format("メモ_%Y-%m-%d_%H%M").to_string();
+    let title = now_local.format("メモ_%Y%m%d_%H%M").to_string();
     let content = String::new();
     let sanitized = sanitize_filename(&title);
     let memo_dir = get_memo_directory()?;
@@ -333,7 +333,7 @@ pub fn create_memo(extension: Option<String>) -> Result<MemoMetadata, String> {
     let mut final_title = title;
     let mut counter = 2;
     while memo_dir.join(&filename_with_ext).exists() {
-        final_title = format!("{}_{}", now_local.format("メモ_%Y-%m-%d_%H%M"), counter);
+        final_title = format!("{}_{}", now_local.format("メモ_%Y%m%d_%H%M"), counter);
         let sanitized_new = sanitize_filename(&final_title);
         filename_with_ext = format!("{}.{}", sanitized_new, ext);
         counter += 1;
