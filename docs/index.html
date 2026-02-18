@@ -196,6 +196,66 @@
       font-size: 0.85rem;
     }
 
+    /* Comments */
+    .comments {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 48px 20px;
+    }
+
+    .comments h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+      color: #357a8e;
+    }
+
+    .comments form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .comments input,
+    .comments textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+
+    .comments input:focus,
+    .comments textarea:focus {
+      outline: none;
+      border-color: #4a90a4;
+    }
+
+    .comments textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .comments button {
+      align-self: flex-start;
+      background: #357a8e;
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .comments button:hover {
+      background: #2a6270;
+    }
+
     /* Support */
     .support {
       text-align: center;
@@ -332,6 +392,19 @@
         </ol>
       </div>
     </div>
+  </section>
+
+  <!-- Comments -->
+  <section class="comments">
+    <h2>コメント・ご要望</h2>
+    <form action="https://formsubmit.co/mh.kz.m13@gmail.com" method="POST">
+      <input type="text" name="name" placeholder="名前（任意）">
+      <textarea name="message" placeholder="コメントを入力..." required></textarea>
+      <input type="hidden" name="_subject" value="ラクメモへのフィードバック">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_next" value="https://hiro-mtmt.github.io/memo-app/">
+      <button type="submit">送信</button>
+    </form>
   </section>
 
   <!-- Support -->
