@@ -22,6 +22,8 @@
 .editor-preview-group {
   flex: 1;
   display: flex;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .pane-center {
@@ -438,7 +440,11 @@
 .editor-container {
   flex: 1;
   padding: 16px;
-  overflow: auto;
+  overflow: hidden;
+}
+
+.editor-container .cm-scroller {
+  overflow: auto !important;
 }
 
 .markdown-editor {
