@@ -344,7 +344,7 @@ function MainLayout({
                     onClick={handleToggleEditor}
                     title="プレビューモードに切り替え"
                   >
-                    <IoEye /> プレビューモード
+                    <IoEye />
                   </button>
                 </div>
               </div>
@@ -369,7 +369,7 @@ function MainLayout({
                     onClick={handleTogglePreview}
                     title="プレビューを隠す"
                   >
-                    <IoEyeOff /> 非表示
+                    <IoEyeOff />
                   </button>
                 </div>
               </div>
@@ -413,7 +413,7 @@ function MainLayout({
                     onClick={handleToggleEditor}
                     title="プレビューモードに切り替え"
                   >
-                    <IoEye /> プレビューモード
+                    <IoEye />
                   </button>
                 )}
               </div>
@@ -444,14 +444,14 @@ function MainLayout({
                   onClick={handleToggleEditor}
                   title="編集モードに切り替え"
                 >
-                  <IoPencil /> 編集モード
+                  <IoPencil />
                 </button>
                 <button
                   className="btn-toggle-preview"
                   onClick={handleTogglePreview}
                   title="プレビューを隠す"
                 >
-                  <IoEyeOff /> 非表示
+                  <IoEyeOff />
                 </button>
               </div>
             </div>

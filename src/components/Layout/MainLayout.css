@@ -534,17 +534,19 @@
 
 /* プレビュー切り替えボタン */
 .btn-toggle-preview {
-  padding: 6px 12px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
   background-color: #6c757d;
   color: #fff;
   border: none;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.2s;
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
 }
 
 .btn-toggle-preview:hover {
