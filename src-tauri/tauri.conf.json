@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "RakuMemo",
-    "version": "0.1.0"
+    "version": "0.6.0"
   },
   "tauri": {
     "allowlist": {
@@ -51,7 +51,12 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "dialog": false,
+      "endpoints": [
+        "https://github.com/hiro-mtmt/memo-app/releases/latest/download/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEY4RjA0MEM1ODc2MjMwOQpSV1FKSTNaWURBU1BEK0d1d1Npazc4WTdlbkhIa3dvUGQ5WXZTMEM2c0YzSTFxL3RXcUdacGN6TQo="
     },
     "windows": [
       {

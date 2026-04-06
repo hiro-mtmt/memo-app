@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { listen } from '@tauri-apps/api/event';
+import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
+import { relaunch } from '@tauri-apps/api/process';
 import { Memo } from './types/memo';
 import MainLayout from './components/Layout/MainLayout';
 import { useMemos } from './hooks/useMemos';
@@ -20,6 +22,25 @@ function App() {
   const [currentMemo, setCurrentMemo] = useState<Memo | null>(null);
   const [editingContent, setEditingContent] = useState<string>('');
   const [saveMessage, setSaveMessage] = useState(false);
+
+  // アプリ起動時にアップデートを確認
+  useEffect(() => {
+    async function checkForUpdate() {
+      try {
+        const { shouldUpdate, manifest } = await checkUpdate();
+        if (shouldUpdate && manifest) {
+          const yes = confirm(`新しいバージョン ${manifest.version} が利用可能です。\n今すぐアップデートしますか？`);
+          if (yes) {
+            await installUpdate();
+            await relaunch();
+          }
+        }
+      } catch (e) {
+        console.log('アップデート確認をスキップ:', e);
+      }
+    }
+    checkForUpdate();
+  }, []);
 
   // ズームイン・ズームアウト (Cmd+/Cmd-) - Tauriメニューイベント経由
   useEffect(() => {
