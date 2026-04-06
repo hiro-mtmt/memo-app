@@ -29,6 +29,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .pane-right {
@@ -37,6 +38,7 @@
   display: flex;
   flex-direction: column;
   border-right: none;
+  overflow: hidden;
 }
 
 .pane-header {
@@ -436,7 +438,7 @@
 .editor-container {
   flex: 1;
   padding: 16px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .markdown-editor {
@@ -496,6 +498,7 @@
 /* タイトル入力フィールド */
 .title-input {
   flex: 1;
+  min-width: 0;
   padding: 4px 12px;
   font-size: 16px;
   font-weight: 600;
@@ -530,6 +533,7 @@
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-shrink: 0;
 }
 
 /* プレビュー切り替えボタン */
