@@ -382,8 +382,9 @@
         <ol>
           <li><code>.dmg</code> ファイルをダウンロード</li>
           <li>開いてアプリを Applications フォルダへドラッグ</li>
-          <li>初回は右クリック → 「開く」を選択</li>
-          <li>確認ダイアログで「開く」をクリック</li>
+          <li>「壊れているため開けません」と表示される場合は、<strong>ターミナル</strong>を開いて以下を実行：<br>
+            <code>xattr -cr /Applications/RakuMemo.app</code></li>
+          <li>その後、通常通りアプリを開く</li>
         </ol>
         <h3>Windows</h3>
         <ol>
