@@ -14,8 +14,8 @@ import {
   IoPencil,
   IoReorderThreeOutline,
   IoChevronBackOutline,
-  IoChevronForwardOutline,
-  IoDocumentAttach
+  IoDocumentAttach,
+  IoMenuOutline
 } from 'react-icons/io5';
 import {
   DndContext,
@@ -210,7 +210,8 @@ function MainLayout({
   return (
     <div className="main-layout">
       {/* 左ペイン: メモリスト（20%） */}
-      <div className={`pane pane-left ${isListCollapsed ? 'pane-collapsed' : ''}`}>
+      {!isListCollapsed && (
+      <div className="pane pane-left">
         <div className="pane-header">
           {!isListCollapsed && <h2>MEMOリスト</h2>}
           <div className="header-buttons">
@@ -237,10 +238,10 @@ function MainLayout({
             )}
             <button
               className="btn-collapse"
-              onClick={() => setIsListCollapsed(!isListCollapsed)}
-              title={isListCollapsed ? 'MEMOリストを表示' : 'MEMOリストを折りたたむ'}
+              onClick={() => setIsListCollapsed(true)}
+              title="MEMOリストを折りたたむ"
             >
-              {isListCollapsed ? <IoChevronForwardOutline /> : <IoChevronBackOutline />}
+              <IoChevronBackOutline />
             </button>
           </div>
         </div>
@@ -306,6 +307,7 @@ function MainLayout({
           </DndContext>
         )}
       </div>
+      )}
 
       {/* エディタとプレビュー */}
       {showEditor && effectiveShowPreview ? (
@@ -313,17 +315,24 @@ function MainLayout({
           <Panel defaultSize={50} minSize={30}>
             <div className="pane pane-center">
               <div className="pane-header">
-                {currentMemo ? (
-                  <input
-                    type="text"
-                    className="title-input"
-                    value={currentMemo.title}
-                    onChange={(e) => onTitleChange(e.target.value)}
-                    placeholder="タイトルを入力..."
-                  />
-                ) : (
-                  <h3>エディタ</h3>
-                )}
+                <div className="header-left">
+                  {isListCollapsed && (
+                    <button className="btn-toggle-list" onClick={() => setIsListCollapsed(false)} title="MEMOリストを表示">
+                      <IoMenuOutline />
+                    </button>
+                  )}
+                  {currentMemo ? (
+                    <input
+                      type="text"
+                      className="title-input"
+                      value={currentMemo.title}
+                      onChange={(e) => onTitleChange(e.target.value)}
+                      placeholder="タイトルを入力..."
+                    />
+                  ) : (
+                    <h3>エディタ</h3>
+                  )}
+                </div>
                 <div className="header-buttons">
                   {currentMemo && (
                     <button className="btn-save" onClick={onSave}>
@@ -374,17 +383,24 @@ function MainLayout({
         <div className="editor-preview-group">
           <div className="pane pane-center pane-expanded">
             <div className="pane-header">
-              {currentMemo ? (
-                <input
-                  type="text"
-                  className="title-input"
-                  value={currentMemo.title}
-                  onChange={(e) => onTitleChange(e.target.value)}
-                  placeholder="タイトルを入力..."
-                />
-              ) : (
-                <h3>エディタ</h3>
-              )}
+              <div className="header-left">
+                {isListCollapsed && (
+                  <button className="btn-toggle-list" onClick={() => setIsListCollapsed(false)} title="MEMOリストを表示">
+                    <IoMenuOutline />
+                  </button>
+                )}
+                {currentMemo ? (
+                  <input
+                    type="text"
+                    className="title-input"
+                    value={currentMemo.title}
+                    onChange={(e) => onTitleChange(e.target.value)}
+                    placeholder="タイトルを入力..."
+                  />
+                ) : (
+                  <h3>エディタ</h3>
+                )}
+              </div>
               <div className="header-buttons">
                 {currentMemo && (
                   <button className="btn-save" onClick={onSave}>
@@ -414,7 +430,14 @@ function MainLayout({
         <div className="editor-preview-group">
           <div className="pane pane-right pane-expanded">
             <div className="pane-header">
-              <h3>Mdプレビュー</h3>
+              <div className="header-left">
+                {isListCollapsed && (
+                  <button className="btn-toggle-list" onClick={() => setIsListCollapsed(false)} title="MEMOリストを表示">
+                    <IoMenuOutline />
+                  </button>
+                )}
+                <h3>Mdプレビュー</h3>
+              </div>
               <div className="header-buttons">
                 <button
                   className="btn-toggle-preview"
